@@ -1,4 +1,7 @@
-# LT .small[資料置き場]
+# 資料置き場
+
+- [ansible ベストプラクティスをやってみる](http://douhashi.github.io/slides/?ansible_best_practice.md)
+  - ansible best practiceを噛み砕いてみる
 - [remark.js ことはじめ](http://harasou.github.io/slides/?remarkjs.md)
     - remark.js における markdown の書き方を簡単に解説
 - [Apache module ことはじめ](http://harasou.github.io/slides/?apache_module.md)

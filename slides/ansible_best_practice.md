@@ -34,8 +34,26 @@ class: center,middle
 - 自分でplaybook書く系だから「**レシピ陳腐化してて動かない**」が少ない
 
 ---
+# ansible用語
+
+- playbook
+  - 操作手順を書いたもの(=レシピ)。YAMLで書く。
+- role
+  - ある程度のまとまりでplaybookを区切ったもの
+  - ex) rbenvを入れる rbenv ロール
+- vars
+  - インストールするバージョンとか、パラメータ的なものを書くスペース。YAML。
+- inventory
+  - 管理するサーバの接続先をまとめて書く(=hostsみたいなの)
+  - iniファイル形式っていうのかな？で書く
+
+---
 class: center,middle
-# でも、使ってみるといろいろある
+# サンプルを見せる時間
+
+---
+class: center,middle
+# でも、使ってるといろいろ悩む
 
 ---
 # ansibleつまづきポイント
@@ -47,53 +65,61 @@ class: center,middle
 
 ---
 class: center,middle
-# 自由すぎて、正解がわからない！！
+# 自由すぎて、正解がわからない
 
 ---
 # そんなansiblerのために、、、
 
 Ansible Best Practiceってのがあるよ。
 
+- http://docs.ansible.com/ansible/playbooks_best_practices.html
 
 ---
 class: center,middle
-# ちょっとだけ触ってみる
+# かいつまんで、まとめてみる
 
 ---
-# こんな感じのサーバを作る
-
-- nginx で、適当な感じのHTMLをserveするサーバ作る
-
----
-# install ansible (on ubuntu)
-
-```
-$ sudo apt-get install software-properties-common
-$ sudo apt-add-repository ppa:ansible/ansible
-$ sudo apt-get update
-$ sudo apt-get install ansible
-```
-
-※ 他はansibleのdoc見て
+class: center,middle
+# inventory
 
 ---
-# インベントリファイルの作成
+- inventory はグルーピングをうまく使う
+- best practice的には [場所]と[役割]でまとめる
 
 ```
-$ mkdir ~/workspace/tekitou_web
-$ cd ~/workspace/tekitou_web
-$ echo "サーバのIP" > inventory
-```
+[ap-north-east-webservers]
+↑場所 & 役割
 
-※あと、対象サーバにsshつなげるように~/.ssh/configしとく
+[ap-north-east-dbservers]
+↑場所 & 役割
+
+[webservers:children]
+ap-north-east-webserver
+↑役割でまとめる
+
+[dbservers:children]
+ap-north-east-dbservers
+↑役割でまとめる
+
+[ap-north-east:children]
+ap-north-east-webservers
+ap-north-east-dbservers
+↑場所でまとめる
+```
 
 ---
-# playbook書く
+# role
 
-```
-$ vim playbook.yml
-```
+- roleの分割単位を細かくしすぎない！
+- roleはroleって名前だけど、includeの単位
+  - それ「role」って名前適切なの？って議論もある
+- best practiceは common/webtier/dbtierの3つ
+- 長くなったら分割する
 
-```
+---
+# vars
 
-```
+- group_vars, host_varsを駆使する
+  - group_vars => webtierだけに適用するvars
+  - host_vars => 単一ホストに適用するvars
+    - ex) host Aはsmallインスタンスだからunicorn worker 2つまで、とか

@@ -1,9 +1,19 @@
 class: center,middle
-# Ansible best practiceをやってみる
+# Ansibleをちょっと綺麗につかう
 
 ---
 class: center,middle
 # @douhashi
+
+---
+class: center,middle
+# 自己紹介
+
+---
+- @douhashi
+- 28歳、一児の父
+- agileware inc.の老害
+- (agilewareでは)ほぼほぼインフラ屋さん
 
 ---
 # Ansible とは
@@ -123,3 +133,10 @@ ap-north-east-dbservers
   - group_vars => webtierだけに適用するvars
   - host_vars => 単一ホストに適用するvars
     - ex) host Aはsmallインスタンスだからunicorn worker 2つまで、とか
+
+---
+# ちょっとだけ書いてみたのでサンプル見せる
+
+---
+class: center,middle
+# いじょ
